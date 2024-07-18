@@ -7,6 +7,7 @@ The objective of this project is to build a serverless, progressive web applicat
 
 - [Project Overview](#project-overview)
 - [User Stories](#user-stories)
+- [Serverless Functions](#serverless-functions)
 
 ## User Stories
 
@@ -81,3 +82,17 @@ The objective of this project is to build a serverless, progressive web applicat
 - **Given** the user is on the events dashboard;
 - **When** the user views the chart displaying upcoming events by city;
 - **Then** the chart should visually represent the number of upcoming events in each city.
+
+## Serverless Functions
+1. getAuthURL
+```sh
+GET - https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url
+```
+2. getAccessToken
+```sh
+GET - https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/token/{code}
+```
+3. getCalendarEvents
+```sh
+GET - https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/get-events/{access_token}
+```
