@@ -68,4 +68,31 @@ describe('<CitySearch /> component', () => {
 
     expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
   });
+  test('calls handleInputChanged and sets filteredLocations when typing in city textbox', async () => {
+    const user = userEvent.setup();
+    const allLocations = ['Berlin', 'New York', 'San Francisco'];
+    CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+
+    const cityTextBox = CitySearchComponent.queryByRole('textbox');
+    await user.type(cityTextBox, 'York');
+
+    const suggestions = allLocations.filter((location) =>
+      location.toUpperCase().includes('YORK')
+    );
+
+    const suggestionListItems = CitySearchComponent.queryAllByRole('listitem');
+    expect(suggestionListItems).toHaveLength(suggestions.length + 1);
+    suggestions.forEach((suggestion, index) => {
+      expect(suggestionListItems[index].textContent).toBe(suggestion);
+    });
+  });
+  test('updates query state when user types in city textbox', async () => {
+    const user = userEvent.setup();
+    const cityTextBox = CitySearchComponent.queryByRole('textbox');
+    const testValue = 'New York';
+
+    await user.type(cityTextBox, testValue);
+
+    expect(cityTextBox).toHaveValue(testValue);
+  });
 });
