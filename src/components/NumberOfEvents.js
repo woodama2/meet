@@ -4,7 +4,9 @@ const NumberOfEvents = () => {
   const [eventNumber, setEventNumber] = useState(32);
   const handleInputChange = (event) => {
     const value = event.target.value;
-    setEventNumber(value);
+    if (/^\d*$/.test(value)) {
+      setEventNumber(value);
+    }
   };
 
   return (

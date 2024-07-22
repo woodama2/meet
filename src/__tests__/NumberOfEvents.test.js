@@ -25,4 +25,10 @@ describe('<NumberOfEvents /> component', () => {
     await user.type(NumberOfEvents, '{backspace}{backspace}10');
     expect(NumberOfEvents).toHaveValue('10');
   });
+  test('does not allow non-numeric input', async () => {
+    const NumberOfEvents = NumberOfEventsComponent.queryByRole('textbox');
+    const user = userEvent.setup();
+    await user.type(NumberOfEvents, 'abc!@#');
+    expect(NumberOfEvents).toHaveValue('32');
+  });
 });
