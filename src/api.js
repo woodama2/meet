@@ -40,11 +40,18 @@ export const getEvents = async () => {
       'https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/get-events' +
       '/' +
       token;
+    console.log('Fetching events from URL:', url); // Added logging
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
       return result.events;
-    } else return null;
+    } else {
+      console.error('No result from API'); // Added logging
+      return null;
+    }
+  } else {
+    console.error('No token found'); // Added logging
+    return null;
   }
 };
 
