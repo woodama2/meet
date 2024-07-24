@@ -48,21 +48,6 @@ export const getEvents = async () => {
   }
 };
 
-const removeQuery = () => {
-  let newUrl;
-  if (window.history.pushState && window.location.pathname) {
-    newUrl =
-      window.location.protocol +
-      '//' +
-      window.location.host +
-      window.location.pathname;
-    window.history.pushState('', '', newUrl);
-  } else {
-    newUrl = window.location.protocol + '//' + window.location.host;
-    window.history.pushState('', '', newUrl);
-  }
-};
-
 export const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
   const tokenCheck = accessToken && (await checkToken(accessToken));
@@ -84,15 +69,50 @@ export const getAccessToken = async () => {
   return accessToken;
 };
 
-const getToken = async (code) => {
-  const encodeCode = encodeURIComponent(code);
-  const response = await fetch(
-    'https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/token' +
-      '/' +
-      encodeCode
-  );
-  const { access_token } = await response.json();
-  access_token && localStorage.setItem('access_token', access_token);
+const removeQuery = () => {
+  let newUrl;
+  if (window.history.pushState && window.location.pathname) {
+    newUrl =
+      window.location.protocol +
+      '//' +
+      window.location.host +
+      window.location.pathname;
+    window.history.pushState('', '', newUrl);
+  } else {
+    newUrl = window.location.protocol + '//' + window.location.host;
+    window.history.pushState('', '', newUrl);
+  }
+};
 
-  return access_token;
+// const getToken = async (code) => {
+//   const encodeCode = encodeURIComponent(code);
+//   const response = await fetch(
+//     'https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/token' +
+//       '/' +
+//       encodeCode
+//   );
+//   const { access_token } = await response.json();
+//   access_token && localStorage.setItem('access_token', access_token);
+
+//   return access_token;
+// };
+
+const getToken = async (code) => {
+  try {
+    const encodeCode = encodeURIComponent(code);
+
+    const response = await fetch(
+      'https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/token' +
+        '/' +
+        encodeCode
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const { access_token } = await response.json();
+    access_token && localStorage.setItem('acces_token', access_token);
+    return access_token;
+  } catch (error) {
+    error.json();
+  }
 };
