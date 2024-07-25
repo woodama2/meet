@@ -38,6 +38,7 @@ export const getEvents = async () => {
     removeQuery();
     const url =
       'https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/get-events' +
+      '/' +
       token;
     console.log('Fetching events from URL:', url); // Added logging
     const response = await fetch(url, { mode: 'no-cors' });
