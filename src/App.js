@@ -29,6 +29,8 @@ const App = () => {
 
   return (
     <div className="App">
+      <h1>meet App</h1>
+      <p>Choose your nearest city</p>
       <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
       <NumberOfEvents setCurrentNOE={setCurrentNOE} />
       <EventList events={events} />
