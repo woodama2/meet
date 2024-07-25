@@ -41,7 +41,7 @@ export const getEvents = async () => {
       '/' +
       token;
     console.log('Fetching events from URL:', url); // Added logging
-    const response = await fetch(url, { mode: 'no-cors' });
+    const response = await fetch(url);
     const result = await response.json();
     if (result) {
       return result.events;
