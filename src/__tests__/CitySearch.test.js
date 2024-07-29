@@ -46,12 +46,16 @@ describe('<CitySearch /> component', () => {
       : [];
 
     // get all <li> elements inside the suggestion list
-    const suggestionListItems = CitySearchComponent.queryAllByRole('listitem');
-    expect(suggestionListItems).toHaveLength(suggestions.length + 1);
-    for (let i = 0; i < suggestions.length; i += 1) {
-      expect(suggestionListItems[i].textContent).toBe(suggestions[i]);
-    }
+    await waitFor(() => {
+      const suggestionListItems =
+        CitySearchComponent.queryAllByRole('listitem');
+      expect(suggestionListItems).toHaveLength(suggestions.length + 1);
+      for (let i = 0; i < suggestions.length; i += 1) {
+        expect(suggestionListItems[i].textContent).toBe(suggestions[i]);
+      }
+    });
   });
+
   test('renders the suggestion text in the textbox upon clicking on the suggestion', async () => {
     const user = userEvent.setup();
     const allEvents = await getEvents();
@@ -83,10 +87,13 @@ describe('<CitySearch /> component', () => {
       location.toUpperCase().includes('YORK')
     );
 
-    const suggestionListItems = CitySearchComponent.queryAllByRole('listitem');
-    expect(suggestionListItems).toHaveLength(suggestions.length + 1);
-    suggestions.forEach((suggestion, index) => {
-      expect(suggestionListItems[index].textContent).toBe(suggestion);
+    await waitFor(() => {
+      const suggestionListItems =
+        CitySearchComponent.queryAllByRole('listitem');
+      expect(suggestionListItems).toHaveLength(suggestions.length + 1);
+      suggestions.forEach((suggestion, index) => {
+        expect(suggestionListItems[index].textContent).toBe(suggestion);
+      });
     });
   });
   test('updates query state when user types in city textbox', async () => {

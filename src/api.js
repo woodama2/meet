@@ -41,11 +41,8 @@ export const getEvents = async () => {
       '/' +
       token;
     console.log('Fetching events from URL:', url); // Added logging
-    debugger;
     const response = await fetch(url);
-    debugger;
     const result = await response.json();
-    debugger;
     if (result) {
       return result.events;
     } else {
@@ -110,7 +107,6 @@ const removeQuery = () => {
 const getToken = async (code) => {
   try {
     const encodeCode = encodeURIComponent(code);
-    debugger;
     const response = await fetch(
       'https://tm3roex2o4.execute-api.us-east-2.amazonaws.com/dev/api/token' +
         '/' +
