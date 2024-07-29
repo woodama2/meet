@@ -5,8 +5,6 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
 
-import './App.css';
-
 const App = () => {
   const [events, setEvents] = useState([]);
   const [currentNOE, setCurrentNOE] = useState(32);
