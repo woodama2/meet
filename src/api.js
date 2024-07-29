@@ -120,7 +120,7 @@ const getToken = async (code) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const { access_token } = await response.json();
-    access_token && localStorage.setItem('acces_token', access_token);
+    access_token && localStorage.setItem('access_token', access_token);
     return access_token;
   } catch (error) {
     error.json();
