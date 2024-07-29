@@ -34,8 +34,8 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         className="city"
         placeholder="Search for a city"
         value={query}
+        onChange={(event) => handleInputChanged(event)}
         onFocus={() => setShowSuggestions(true)}
-        onChange={handleInputChanged}
       />
       {showSuggestions ? (
         <ul className="suggestions">
