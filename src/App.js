@@ -17,9 +17,11 @@ const App = () => {
 
   useEffect(() => {
     if (navigator.onLine) {
+      console.log('Online: Clearing warning alert');
       //set the warning alert message to an empty string ""
       setWarningAlert('');
     } else {
+      console.log('Offline: Setting warning alert');
       //set the warning alert message to a non-empty string ""
       setWarningAlert(
         'You are currently offline.  The data may not be completely accurate.'
