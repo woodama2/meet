@@ -7,6 +7,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
+import Loader from './components/Loader';
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -16,6 +17,7 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
   const [warningAlert, setWarningAlert] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (navigator.onLine) {
@@ -33,6 +35,7 @@ const App = () => {
   }, [currentCity, currentNOE]);
 
   const fetchData = async () => {
+    setLoading(true);
     const allEvents = await getEvents();
     const filteredEvents =
       currentCity === 'See all cities'
@@ -40,31 +43,38 @@ const App = () => {
         : allEvents.filter((event) => event.location === currentCity);
     setEvents(filteredEvents.slice(0, currentNOE));
     setAllLocations(extractLocations(allEvents));
+    setLoading(false);
   };
 
   return (
     <div className="App">
-      <div className="alerts-container">
-        {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
-        {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
-        {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
-      </div>
-      <h1>meet App</h1>
-      <p>Choose your nearest city</p>
-      <CitySearch
-        allLocations={allLocations}
-        setCurrentCity={setCurrentCity}
-        setInfoAlert={setInfoAlert}
-      />
-      <NumberOfEvents
-        setCurrentNOE={setCurrentNOE}
-        setErrorAlert={setErrorAlert}
-      />
-      <div className="charts-container">
-        <CityEventsChart allLocations={allLocations} events={events} />
-        <EventGenresChart events={events} />
-      </div>
-      <EventList events={events} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="alerts-container">
+            {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
+            {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
+            {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
+          </div>
+          <h1>meet App</h1>
+          <p>Choose your nearest city</p>
+          <CitySearch
+            allLocations={allLocations}
+            setCurrentCity={setCurrentCity}
+            setInfoAlert={setInfoAlert}
+          />
+          <NumberOfEvents
+            setCurrentNOE={setCurrentNOE}
+            setErrorAlert={setErrorAlert}
+          />
+          <div className="charts-container">
+            <CityEventsChart allLocations={allLocations} events={events} />
+            <EventGenresChart events={events} />
+          </div>
+          <EventList events={events} />
+        </>
+      )}
     </div>
   );
 };
